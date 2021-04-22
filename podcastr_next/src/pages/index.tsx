@@ -91,7 +91,8 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps){
                 <Image width={192} 
                 height={192} 
                 src={episode.thumbnail} 
-                alt={episode.title}/>
+                alt={episode.title}
+                objectFit="cover"/>
 
                 <div className={styles.episodeDetails}>
                   <a href="">{episode.title}</a>
