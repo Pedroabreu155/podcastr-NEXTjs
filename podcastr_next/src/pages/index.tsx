@@ -63,7 +63,7 @@ type Episode = {
 
 
 type HomeProps = {
-  episodes: Array<Episode>
+  episodes: Episode[]
 }
 
 //não fazer formatação de dados no componente em si
@@ -73,7 +73,7 @@ export default function Home(props: HomeProps){
   return(
     <>
     <h1>Index</h1>
-    <p>{props.episodes}</p>
+    <p>{JSON.stringify(props.episodes)}</p>
     </>
   )
 }
@@ -82,6 +82,7 @@ export default function Home(props: HomeProps){
 import { api } from '../services/api'
 import { format, parseISO} from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
+import { convertDurationTimeToString } from '../../utils/convertDurationTimeToString'
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get('episodes', {
@@ -100,7 +101,8 @@ export const getStaticProps: GetStaticProps = async () => {
       members: episode.members,
       publishedAt: format(parseISO(episode.published_at), 'd MMM yy', { locale: ptBR }),
       duration: Number(episode.file.duration),
-      descriptiom: episode.description,
+      durationAsString: convertDurationTimeToString(Number(episode.file.duration)),
+      description: episode.description,
       url: episode.file.url,
 
     }
@@ -109,7 +111,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      episodes: data
+      episodes,
     },
     revalidate: 60 * 60 * 8
   }
