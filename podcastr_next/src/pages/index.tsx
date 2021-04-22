@@ -53,7 +53,19 @@
 
 import { GetStaticProps } from 'next'
 
-export default function Home(props){
+
+type Episode = {
+  id: string;
+    title: string;
+    menbers: string
+}
+
+
+type HomeProps = {
+  episodes: Array<Episode>
+}
+
+export default function Home(props: HomeProps){
 
   return(
     <>
@@ -64,9 +76,17 @@ export default function Home(props){
 }
 
 
+import { api } from '../services/api'
+
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch('http://localhost:3333/episodes')
-  const data = await response.json()
+  const { data } = await api.get('episodes', {
+    params: {
+      _limit: 12,
+      _sort: 'publishet_at',
+      _order: 'desc'
+    }
+  })
+
     
 
   return {
