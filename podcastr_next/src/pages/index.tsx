@@ -56,9 +56,14 @@ import { GetStaticProps } from 'next'
 
 type Episode = {
   id: string;
-    title: string;
-    members: string;
-    published_at: string;
+  title: string;
+  thumbnail: string;
+  description: string;
+  members: string;
+  duration: number;
+  durationAsString: string;
+  url: string;
+  published_at: string;
 }
 
 
@@ -66,15 +71,21 @@ type HomeProps = {
   episodes: Episode[]
 }
 
+
 //não fazer formatação de dados no componente em si
 
+import styles from './home.module.scss'
 export default function Home(props: HomeProps){
 
   return(
-    <>
-    <h1>Index</h1>
-    <p>{JSON.stringify(props.episodes)}</p>
-    </>
+    <div className={styles.homePage}>
+      <section className={styles.latestEpisodes}>
+
+      </section>
+      <section className={styles.allEpisodes}>
+
+      </section>
+    </div>
   )
 }
 
