@@ -68,19 +68,29 @@ type Episode = {
 
 
 type HomeProps = {
-  episodes: Episode[]
+  latestEpisodes: Episode[];
+  allEpisodes: Episode[]
 }
 
 
 //não fazer formatação de dados no componente em si
 
 import styles from './home.module.scss'
-export default function Home(props: HomeProps){
+export default function Home({latestEpisodes, allEpisodes}: HomeProps){
 
   return(
     <div className={styles.homePage}>
       <section className={styles.latestEpisodes}>
-
+        <h2>Ultimos Lançamentos</h2>
+        <ul>
+          {latestEpisodes.map(episode => {
+            return (
+              <li key={episode.id}>
+                <a href="">{episode.title}</a>
+              </li>
+            )
+          })}
+        </ul>
       </section>
       <section className={styles.allEpisodes}>
 
@@ -118,11 +128,15 @@ export const getStaticProps: GetStaticProps = async () => {
 
     }
   })
+
+  const latestEpisodes = episodes.slice(0, 2)
+  const allEpisodes = episodes.slice(2, episodes.length)
     
 
   return {
     props: {
-      episodes,
+      latestEpisodes,
+      allEpisodes,
     },
     revalidate: 60 * 60 * 8
   }
