@@ -76,6 +76,7 @@ type HomeProps = {
 //não fazer formatação de dados no componente em si
 
 import styles from './home.module.scss'
+import Image from 'next/image'
 export default function Home({latestEpisodes, allEpisodes}: HomeProps){
 
   return(
@@ -86,7 +87,22 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps){
           {latestEpisodes.map(episode => {
             return (
               <li key={episode.id}>
-                <a href="">{episode.title}</a>
+
+                <Image width={192} 
+                height={192} 
+                src={episode.thumbnail} 
+                alt={episode.title}/>
+
+                <div className={styles.episodeDetails}>
+                  <a href="">{episode.title}</a>
+                  <p>{episode.members}</p>
+                  <span>{episode.published_at}</span>
+                  <span>{episode.durationAsString}</span>
+                  <button type="button">
+                    <img src="/play-green.svg" alt="PlayBtn"/>
+                  </button>
+                </div>
+                
               </li>
             )
           })}
