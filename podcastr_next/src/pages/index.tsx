@@ -63,7 +63,7 @@ type Episode = {
   duration: number;
   durationAsString: string;
   url: string;
-  published_at: string;
+  publishedAt: string;
 }
 
 
@@ -97,7 +97,7 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps){
                 <div className={styles.episodeDetails}>
                   <a href="">{episode.title}</a>
                   <p>{episode.members}</p>
-                  <span>{episode.published_at}</span>
+                  <span>{episode.publishedAt}</span>
                   <span>{episode.durationAsString}</span>
                   <button type="button">
                     <img src="/play-green.svg" alt="PlayBtn"/>
