@@ -57,7 +57,8 @@ import { GetStaticProps } from 'next'
 type Episode = {
   id: string;
     title: string;
-    menbers: string
+    members: string;
+    published_at: string;
 }
 
 
@@ -65,18 +66,22 @@ type HomeProps = {
   episodes: Array<Episode>
 }
 
+//não fazer formatação de dados no componente em si
+
 export default function Home(props: HomeProps){
 
   return(
     <>
     <h1>Index</h1>
-    <p>{JSON.stringify(props.episodes)}</p>
+    <p>{props.episodes}</p>
     </>
   )
 }
 
 
 import { api } from '../services/api'
+import { format, parseISO} from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get('episodes', {
@@ -87,6 +92,19 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   })
 
+  const episodes = data.map(episode => {
+    return {
+      id: episode.id,
+      title: episode.title,
+      thumbnail: episode.thumbnail,
+      members: episode.members,
+      publishedAt: format(parseISO(episode.published_at), 'd MMM yy', { locale: ptBR }),
+      duration: Number(episode.file.duration),
+      descriptiom: episode.description,
+      url: episode.file.url,
+
+    }
+  })
     
 
   return {
