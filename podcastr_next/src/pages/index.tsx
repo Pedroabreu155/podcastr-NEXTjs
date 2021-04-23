@@ -74,7 +74,7 @@ type HomeProps = {
 
 
 //não fazer formatação de dados no componente em si
-
+import  Link  from 'next/link'
 import styles from './home.module.scss'
 import Image from 'next/image'
 export default function Home({latestEpisodes, allEpisodes}: HomeProps){
@@ -95,7 +95,9 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps){
                 objectFit="cover"/>
 
                 <div className={styles.episodeDetails}>
-                  <a href="">{episode.title}</a>
+                  <Link href={`/episodes/${episode.id}`}>
+                  <a>{episode.title}</a>
+                  </Link>
                   <p>{episode.members}</p>
                   <span>{episode.publishedAt}</span>
                   <span>{episode.durationAsString}</span>
@@ -113,12 +115,14 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps){
           <h2>Todos episódios</h2>
           <table cellSpacing={0}>
             <thead>
+              <tr>
               <th></th>
               <th>Podcast</th>
               <th>Integrantes</th>
               <th>Data</th>
               <th>Duração</th>
               <th></th>
+              </tr>
             </thead>
             <tbody>
               {allEpisodes.map(episode => {
@@ -134,7 +138,9 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps){
                       />
                     </td>
                     <td>
-                      <a href="">{episode.title}</a>
+                      <Link href={`/episodes/${episode.id}`}>
+                        <a>{episode.title}</a>
+                      </Link>
                     </td>
                     <td>{episode.members}</td>
                     <td style={{width: 100}}>{episode.publishedAt}</td>
