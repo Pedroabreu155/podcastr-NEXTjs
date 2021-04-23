@@ -5,6 +5,7 @@ import ptBR from 'date-fns/locale/pt-BR'
 import {convertDurationTimeToString} from '../../../utils/convertDurationTimeToString'
 import styles from './episode.module.scss'
 import Image from 'next/image'
+import Link from 'next/link'
 
 type Episode = {
   id: string;
@@ -27,9 +28,11 @@ export default function Episode({ episode }: EpisodeProps	){
   return(
     <div className={styles.episode}>
       <div className={styles.thumbnailContainer}>
-        <button type="button">
-          <img src="/arrow-left.svg" alt="ReturnBtn"/>
-        </button>
+        <Link href="/">
+          <button type="button">
+            <img src="/arrow-left.svg" alt="ReturnBtn"/>
+          </button>
+        </Link>
         <Image 
         width={700} 
         height={160} 
