@@ -69,17 +69,17 @@
             padding-left: 0.5rem;
             position: relative;
 
-            // &::before{
-            //   content: "";
-            //   width: 4px;
-            //   height: 4px;
-            //   border-radius: 2px;
-            //   background: #ddd;
-            //   position: absolute;
-            //   left: 0;
-            //   top: 50%;
-            //   transform: translate(-50%, -50%);
-            // }
+            &::before{
+              content: "";
+              width: 4px;
+              height: 4px;
+              border-radius: 2px;
+              background: #ddd;
+              position: absolute;
+              left: 0;
+              top: 50%;
+              transform: translate(-50%, -50%);
+             }
           }
         }
 
