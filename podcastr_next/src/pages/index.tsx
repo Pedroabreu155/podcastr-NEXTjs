@@ -77,10 +77,12 @@ import  Link  from 'next/link'
 import styles from './home.module.scss'
 import Image from 'next/image'
 
+import { usePlayer } from '../contexts/PlayerContext'
+
 
 export default function Home({latestEpisodes, allEpisodes}: HomeProps){
 
-  const { playList } = useContext(PlayerContext)
+  const { playList } = usePlayer()
 
   const episodeList = [...latestEpisodes, ...allEpisodes]
 
@@ -132,7 +134,7 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps){
               </tr>
             </thead>
             <tbody>
-              {allEpisodes.map(episode => {
+              {allEpisodes.map((episode, index) => {
                 return (
                   <tr key={episode.id}>
                     <td style={{width: 72}}>
@@ -153,7 +155,7 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps){
                     <td style={{width: 100}}>{episode.publishedAt}</td>
                     <td>{episode.durationAsString}</td>
                     <td>
-                      <button type="button">
+                      <button type="button" onClick={() => playList(episodeList, index + latestEpisodes.length)}>
                           <img src="/play-green.svg" alt="PlayBtn"/>
                       </button>
                     </td>
@@ -172,8 +174,6 @@ import { api } from '../services/api'
 import { format, parseISO} from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 import { convertDurationTimeToString } from '../../utils/convertDurationTimeToString'
-import { useContext } from 'react'
-import { PlayerContext } from '../contexts/PlayerContext'
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get('episodes', {

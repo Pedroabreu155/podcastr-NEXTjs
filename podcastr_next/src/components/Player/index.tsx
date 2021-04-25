@@ -1,5 +1,5 @@
-import { useContext, useRef, useEffect } from 'react'
-import { PlayerContext } from '../../contexts/PlayerContext'
+import { useRef, useEffect } from 'react'
+import { usePlayer } from '../../contexts/PlayerContext'
 import styles from './styles.module.scss'
 import Image from 'next/image'
 import Slider from 'rc-slider'
@@ -11,10 +11,16 @@ export function Player(){
 
   const { episodeList, 
           currentEpisodeIndex, 
-          isPlaying, 
+          isPlaying,
+          isLooping, 
           togglePlay,
-           setPlayingState
-        } = useContext(PlayerContext)
+          toggleLoop,
+          setPlayingState,
+          playNext,
+          playPrevious,
+          hasNext,
+          hasPrevious
+        } = usePlayer()
 
 
   useEffect(() => {
@@ -82,6 +88,7 @@ export function Player(){
           src={episode.url}
           ref={audioRef}
           autoPlay
+          loop={isLooping}
           onPlay={() => setPlayingState(true)}
           onPause={() => setPlayingState(false)}
           />
@@ -92,7 +99,7 @@ export function Player(){
           <button type="button" disabled={!episode}>
             <img src="/shuffle.svg" alt="shuffleBtn"/>
           </button>
-          <button type="button" disabled={!episode}>
+          <button type="button" onClick={playPrevious} disabled={!episode || !hasPrevious}>
             <img src="/play-previous.svg" alt="previousBtn"/>
           </button>
           <button 
@@ -106,10 +113,15 @@ export function Player(){
               : <img src="/play.svg" alt="PlayBtn"/>
               }
           </button>
-          <button type="button" disabled={!episode}>
+          <button type="button" onClick={playNext} disabled={!episode || !hasNext}>
             <img src="/play-next.svg" alt="playNextBtn"/>
           </button>
-          <button type="button" disabled={!episode}>
+          <button 
+            type="button" 
+            disabled={!episode}
+            onClick={toggleLoop}
+            className={isLooping ? styles.isActive : ''}
+          >
             <img src="/repeat.svg" alt="repeatBtn"/>
           </button>
         </div>
