@@ -80,7 +80,9 @@ import Image from 'next/image'
 
 export default function Home({latestEpisodes, allEpisodes}: HomeProps){
 
-  const { play } = useContext(PlayerContext)
+  const { playList } = useContext(PlayerContext)
+
+  const episodeList = [...latestEpisodes, ...allEpisodes]
 
 
   return(
@@ -88,7 +90,7 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps){
       <section className={styles.latestEpisodes}>
         <h2>Ultimos Lançamentos</h2>
         <ul>
-          {latestEpisodes.map(episode => {
+          {latestEpisodes.map((episode, index) => {
             return (
               <li key={episode.id}>
 
@@ -107,7 +109,7 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps){
                   <span>{episode.durationAsString}</span>
                 </div>
 
-                <button type="button" onClick={() => play(episode)}>
+                <button type="button" onClick={() => playList(episodeList, index)}>
                     <img src="/play-green.svg" alt="PlayBtn"/>
                   </button>
                 
